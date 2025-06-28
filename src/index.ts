@@ -301,8 +301,8 @@ async function handleTranscription(request: Request, env: Env): Promise<Response
     }
 
     const formData = await request.formData();
-    const audioFile = formData.get('audio') as File;
-    if (!audioFile) return createErrorResponse('缺少音频文件，请上传 audio 字段');
+    const audioFile = formData.get('file') as File;
+    if (!audioFile) return createErrorResponse('缺少音频文件，请上传 file 字段');
 
     const { mimeType, error: validationError } = getMimeTypeAndValidate(audioFile);
     if (validationError) return createErrorResponse(validationError);
@@ -442,7 +442,7 @@ function handleApiDocs(): Response {
         contentType: 'multipart/form-data',
         responseType: 'text/event-stream (Server-Sent Events)',
         parameters: {
-          audio: {
+          file: {
             type: 'file',
             required: true,
             description: '音频或视频文件'
